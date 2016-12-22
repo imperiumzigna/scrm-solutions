@@ -1,0 +1,65 @@
+{% extends 'extracao/base.html' %}
+{% block title %}Add Workspace{% endblock %}
+{% block workspaces_active %}active{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+<meta charset="UTF-8">
+    <div class="row">
+
+        <div class="col-sm-12 col-md-7">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h3>Add Workspace</h3>
+                    {% if error_message %}
+                        <p><strong>{{ error_message }}</strong></p>
+                    {% endif %}
+                    <form class="form-horizontal" role="form" action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% include 'extracao/form_template.html' %}
+						<div class="row text-center">
+			                <div class="col-md-4">
+			                  <a href="{% url 'extracao:create_workspace_facebook' %}" role="button">
+			                    <span class="fa-stack fa-4x">
+			                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
+			                        <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+			                    </span></a>
+			                    <h4 class="service-heading">facebook</h4>
+			                    <p class="text-muted">Extração das postagens de Fanpages.</p>
+			                </div>
+			                <div class="col-md-2">
+			                  <a href="{% url 'extracao:create_workspace_twitter' %}" role="button">
+			                    <span class="fa-stack fa-4x">
+			                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
+			                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+			                    </span></a>
+			                    <h4 class="service-heading">twitter</h4>
+			                    <p class="text-muted">Extração das postagens.</p>
+			                </div>
+			            </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-12 col-md-5">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h3>Social CRM Api?</h3>
+                    <p>É uma aplicação para extrair conteúdo de redes sociais.</p>
+                    <h3>Como realizar a extração?</h3>
+                    <p>Primeiro, crie uma nova workspace na página inicial. Escolha a rede social desejada para realizar a extração das postagens.</p>
+                    <h3>Quais informações são necessárias?</h3>
+                    <ul>
+                        <li>Criar um app do facebook <a href="https://developers.facebook.com/"> facebook for developers</a></li>                        
+                        <li>Copiar User token</li>
+                        <li>Escolher Fanpage que deseja obter os posts</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

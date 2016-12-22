@@ -1,0 +1,151 @@
+{% extends 'extracao/base.html' %}
+{% block title %}Detalhes Processamento{% endblock %}
+{% block workspaces_active %}active{% endblock %}
+
+{% block body %}
+
+{% load static%}
+<meta charset="UTF-8">
+
+<div class="container-fluid">
+
+    <div class="row">
+
+        <!-- Left Workspace Info -->
+        <div class="col-sm-4 col-md-12">
+            <div class="panel panel-default">
+                <a href="{% url 'extracao:detail_process' workspace.id %}"></a>
+		             {% if workspace.extracao_twitter %}
+		             <img src="{% static "extracao/images/twitter.jpg" %}" class="img-responsive"> 
+		             <strong>{{ workspace.extracao_twitter }}</strong><br> 
+		             <strong>Consulta:</strong><small> {{ workspace.termo_consulta }}</small><br>
+                     
+                     <strong>ckey:</strong><small> {{ workspace.ckey }}</small><br>
+                     <strong>asecret:</strong><small> {{ workspace.asecret }}</small><br>
+                     <strong>csecret:</strong><small> {{ workspace.csecret }}</small><br>
+                     <strong>atoken:</strong><small> {{ workspace.atoken }}</small>
+                    {% else %}
+		                <div class="panel-body">
+		                <img src="{% static "extracao/images/face.jpg" %}" class="img-responsive">
+		                    <h4>{{ workspace.extracao_facebook }}</h4>
+		                    <h4><small><strong>User Token:</strong> {{ workspace.user_token }}</small></h4>
+		                </div>
+                	{% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        {% if workspace.extracao_twitter %}
+        
+        <div class="col-sm-4 col-md-4">
+	         <ul class="nav nav-pills" style="margin: 2px 2px;">
+	            <li role="presentation" class="active"><a href="{% url 'extracao:detail_process' workspace.id %}">Vizualizar</a></li>
+	            <li role="presentation"><a href="{% url 'extracao:create_twitter_post' workspace.id %}">Extrair</a></li>
+	            <li role="presentation"><a href="{% url 'extracao:processing_twitter_post' workspace.id %}">Pré-Processamento</a></li>
+	             <!-- Baixar -->
+       			  <div class="dropup">
+				    <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">
+				    <span class="glyphicon glyphicon-download-alt "></span></button>
+				    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+				      <li role="presentation"><a href="{% url 'extracao:export_process_tweet' tipo='csv' %}" class="btn btn-default btn-sm" role="button">CSV</a></li>
+				      <li role="presentation"><a href="{% url 'extracao:export_process_tweet' tipo='json' %}" class="btn btn-default btn-sm" role="button">JSON</a></li>
+				      <li role="presentation"><a href="{% url 'extracao:export_process_tweet' tipo='xls' %}" class="btn btn-default btn-sm" role="button">XLS</a></li>
+				    </ul>
+				  </div>  
+	         </ul>
+        </div>
+        {% else %}
+        <div class="col-sm-4 col-md-4">
+	         <ul class="nav nav-pills" style="margin: 2px 2px;">
+	            <li role="presentation" class="active"><a href="{% url 'extracao:detail_process' workspace.id %}">Vizualizar</a></li>
+	            <li role="presentation"><a href="{% url 'extracao:create_facebook_post' workspace.id %}">Extrair</a></li>
+	            <li role="presentation"><a href="{% url 'extracao:processing_facebook_post' workspace.id %}">Pré-Processamento</a></li>
+                  <!-- Baixar -->
+       			  <div class="dropup">
+				    <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">
+				    <span class="glyphicon glyphicon-download-alt "></span></button>
+				    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+				      <li role="presentation"><a href="{% url 'extracao:export_process_post' tipo='csv' %}" class="btn btn-default btn-sm" role="button">CSV</a></li>
+				      <li role="presentation"><a href="{% url 'extracao:export_process_post' tipo='json' %}" class="btn btn-default btn-sm" role="button">JSON</a></li>
+				      <li role="presentation"><a href="{% url 'extracao:export_process_post' tipo='xls' %}" class="btn btn-default btn-sm" role="button">XLS</a></li>
+				    </ul>
+				  </div>  
+	         </ul>
+        </div>
+		{% endif %}
+   </div>
+   <div class="row">	
+        <!-- Right post Info -->
+        <div class="col-sm-4 col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    {% if error_message %}
+                        <p><strong>{{ error_message }}</strong></p>
+                    {% endif %}
+                    
+                    {% if workspace.extracao_twitter %}
+                    	<table id="exemplo" class="table table-striped table-bordered" cellspacing="0" width="100%">
+				          	<thead>
+				          		<tr>
+				              		<th>tweet_origin</th>
+				              		<th>tweet_processado</th>
+				          	    </tr>
+				            </thead>
+				            <tfoot>
+				            	<tr>
+				                	<th>tweet_origin</th>
+				              		<th>tweet_processado</th>
+				           	   </tr>
+				            </tfoot>
+				            
+				            <tbody>
+				        	{% for tweet in workspace.processamento_tweet_set.all %}
+	                           <tr>                      
+	                              <!-- nome coluna: tweet_origin -->
+	                              <td>
+	                                 {{tweet.tweet_origin}}
+	                              </td>
+	                              <!-- nome coluna: tweet processado -->
+	                              <td>
+	                                 {{tweet.tweet_process}}
+	                              </td>
+	                            </tr>
+	                        {% endfor %}
+	                       </tbody>
+	                    </table>
+	                {% else %}
+	                
+                       	<table id="exemplo" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                       	    <thead>
+			            		<tr>
+			                		<th>Post_origin</th>
+				                	<th>Post Processado</th> 
+			            		</tr>
+			        		</thead>
+			        		<tfoot>
+			            		<tr>
+			                		<th>Post_origin</th>
+				                	<th>Post Processado</th> 
+			            		</tr>
+			        		</tfoot>
+			        		<tbody>
+			        		{% for post in workspace.processamento_post_set.all %}
+	                            <tr>
+	                                <td>
+	                                    {{post.message_origin}}
+	                                </td>
+	                                <td>
+	                                    {{post.message}}
+	                                </td>
+                           		  {% endfor %}
+                           		 </tr>
+                            </tbody>
+                        </table>
+	                {% endif %}
+				</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}   

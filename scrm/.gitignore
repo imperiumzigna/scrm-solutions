@@ -1,0 +1,6 @@
+/__init__.pyc
+/settings.pyc
+/urls.pyc
+/wsgi.pyc
+/__pycache__
+settings.py

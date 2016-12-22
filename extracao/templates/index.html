@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+{% load static %}
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SCRM - API de Extração</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="{% static "startbootstrap_agency/vendor/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
+    
+    <!-- Custom Fonts -->
+    <link href="{% static "startbootstrap_agency/vendor/font-awesome/css/font-awesome.min.css" %}" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic" rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel='stylesheet' type='text/css'>
+
+    <!-- Theme CSS -->
+    <link href="{% static "startbootstrap_agency/css/agency.min.css" %}" rel="stylesheet">
+
+
+</head>
+
+<body id="page-top" class="index">
+
+    <!-- Navigation -->
+    <nav id="mainNav" class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                </button>
+                <h3><a class="navbar-brand page-scroll" href="#page-top">SCRM API</a></h3>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse"
+				id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav navbar-right">
+					<li class="hidden"><a href="#page-top"></a></li>
+
+					<li><a class="page-scroll" href="#services">Serviços</a></li>
+					<li><a class="page-scroll" href="#about">Sobre o Projeto</a></li>
+					<li><a class="page-scroll" href="#team">Equipe</a></li>
+					<li><a class="page-scroll" href="#contact">Contato</a></li>
+					<li><a class="page-scroll" href="admin">Administração</a></li>
+					<li><a class="page-scroll" href="extracao">Entrar</a></li>
+				</ul>
+			</div>
+			<!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+    <!-- Header -->
+    <header style="height: 700px">
+        <div class="container">
+            <div class="intro-text">
+<!--                 <div class="intro-lead-in">Bem Vindo! sCRM</div> -->
+<!--                 <a href="#services" class="page-scroll btn btn-xl">Texto</a> -->
+            </div>
+        </div>
+    </header>
+
+    <!-- Services Section -->
+    <section id="services" style="padding: 90px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Extração de dados de Redes Sociais</h2>
+                    <h3 class="section-subheading text-muted">Acesso a área administrativa de extração de dados.</h3>
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col-md-6">
+                    <span class="fa-stack fa-4x">
+                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                        <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <h4 class="service-heading">Facebook</h4>
+                    <p class="text-muted">Extração das postagens de Fanpages.</p>
+                </div>
+                <div class="col-md-6">
+                    <span class="fa-stack fa-4x">
+                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <h4 class="service-heading">twitter</h4>
+                    <p class="text-muted">Extração das postagens.</p>
+                </div>
+
+            </div>
+
+		</div>
+    </section>
+
+
+    <!-- About Section -->
+    <section id="about" style="padding: 120px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Sobre o Projeto</h2>
+                    <h3 class="section-subheading text-muted">Api de extração e armazenamento de dados de Redes Sociais</h3>
+                </div>
+            </div>
+            <div class="row">
+            	<div class="col-lg-12 text-center">
+            		<h3 class="section-subheading" style="text-align: center"> Essa ferramenta começou a ser desenvolvida em 2016, e é destinada a análise de dados de Redes Sociais.
+            		Faz extração de dados de Fanpages do Facebook e	de qualquer assunto do Twitter. Armazena e Pré-processa os dados extraidos.
+            	</h3>
+            	</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="bg-light-gray" style="padding: 100px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Nossa Equipe</h2>
+                    <h3 class="section-subheading text-muted"></h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="team-member">
+                        <img src="{% static "startbootstrap_agency/img/team/abraao.jpg" %}" class="img-responsive img-circle" alt="">
+                        <h4>Abraão Santana</h4>
+                        <p class="text-muted"></p>
+                        <ul class="list-inline social-buttons">
+                            <li><a href="#"><i class="fa fa-twitter"></i></a>
+                            </li>
+                            <li><a href="#"><i class="fa fa-facebook"></i></a>
+                            </li>
+                            <li><a href="#"><i class="fa fa-linkedin"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="team-member">
+                        <img src="{% static "startbootstrap_agency/img/team/bea.png" %}" class="img-responsive img-circle" alt="">
+                        <h4>Beatriz Nery</h4>
+                        <p class="text-muted"></p>
+                        <ul class="list-inline social-buttons">
+                            <li><a href="#"><i class="fa fa-twitter"></i></a>
+                            </li>
+                            <li><a href="#"><i class="fa fa-facebook"></i></a>
+                            </li>
+                            <li><a href="#"><i class="fa fa-linkedin"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="team-member">
+                        <img src="{% static "startbootstrap_agency/img/team/jacobs.jpg" %}" class="img-responsive img-circle" alt="">
+                        <h4>Antônio Jacob</h4>
+                        <p class="text-muted"></p>
+                        <ul class="list-inline social-buttons">
+                            <li><a href="#"><i class="fa fa-twitter"></i></a>
+                            </li>
+                            <li><a href="#"><i class="fa fa-facebook"></i></a>
+                            </li>
+                            <li><a href="#"><i class="fa fa-linkedin"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="team-member">
+                        <img src="{% static "startbootstrap_agency/img/team/bea.png" %}" class="img-responsive img-circle" alt="">
+                        <h4>Márcia Pantoja</h4>
+                        <p class="text-muted"></p>
+                        <ul class="list-inline social-buttons">
+                            <li><a href="#"><i class="fa fa-twitter"></i></a>
+                            </li>
+                            <li><a href="#"><i class="fa fa-facebook"></i></a>
+                            </li>
+                            <li><a href="#"><i class="fa fa-linkedin"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 text-center">
+                    <p class="large text-muted">Equipe do projeto.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Clients Aside -->
+  <!--   <aside class="clients">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-sm-8">
+                    <a href="#">
+                        <img src="{% static "startbootstrap_agency/img/logos/unama_ser_Vcs5.jpg" %}" class="img-responsive img-centered" alt="">
+                    </a>
+                </div>
+                <div class="col-md-6 col-sm-8">
+                    <a href="#">
+                        <img src="{% static "startbootstrap_agency/img/logos/logo_linc.png" %}" class="img-responsive img-centered" alt="">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </aside> -->
+
+    <!-- Contact Section -->
+    <section id="contact" style="padding: 70px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Contato</h2>
+                    <h3 class="section-subheading text-muted">Envie sua mensagem que retornamos em breve.</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <form name="sentMessage" id="contactForm" action="{% url 'email'%}" role="form" method="post">
+                    	{% csrf_token %}
+    					{{ form.as_p }}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Nome *" id="id_name" name="name" required data-validation-required-message="Por favor informe seu nome.">
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" class="form-control" placeholder="Email *" id="id_email" name="email" required data-validation-required-message="Por favor informe seu endereço de e-mail.">
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                                <div class="form-group">
+                                    <input type="tel" class="form-control" placeholder="Telefone *" id="id_phone" name="phone" required data-validation-required-message="Por favor informe seu telefone.">
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <textarea class="form-control" placeholder="Mensagem *" id="id_message" name="message" required data-validation-required-message="Por favor digite sua mensagem."></textarea>
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="col-lg-12 text-center">
+                                <div id="success"></div>
+                                <button type="submit" class="btn btn-xl">Enviar mensagem</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <span class="copyright">Copyright &copy; SCRM API 2016</span>
+                </div>
+                <div class="col-md-4">
+                    <ul class="list-inline social-buttons">
+                        <li><a href="#"><i class="fa fa-twitter"></i></a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-facebook"></i></a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-linkedin"></i></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <ul class="list-inline quicklinks">
+                        <li><a href="#">Política de Privacidade</a>
+                        </li>
+                        <li><a href="#">Termos de uso</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="{% static "startbootstrap_agency/vendor/jquery/jquery.min.js" %}"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static "startbootstrap_agency/vendor/bootstrap/js/bootstrap.min.js" %}"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="{% static "startbootstrap_agency/vendor/jquery/jquery.easing.min.js" %}"></script>
+    
+    <!-- Contact Form JavaScript -->
+    <script src="{% static "startbootstrap_agency/js/jqBootstrapValidation.js" %}"></script>
+	<!-- <script src="{% static "startbootstrap_agency/js/contact_me.js" %}"></script> -->
+
+    <!-- Theme JavaScript -->
+    <script src="{% static "startbootstrap_agency/js/agency.min.js" %}"></script>
+
+</body>
+
+</html>

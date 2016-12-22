@@ -1,0 +1,161 @@
+{% extends 'extracao/base.html' %}
+{% block workspace_active %}active{% endblock %}
+
+
+
+
+{% block body %}
+
+
+<div class="albums-container container-fluid">
+{% load static %}
+    <!-- Workspace -->
+    <div class="row">
+        <div class="col-sm-12">
+            <h3>Workspaces: {{ user.username }}</h3>
+        </div>
+        {% if workspaces %}
+            {% for workspace in workspaces %}
+                <div class="col-sm-10 col-lg-2">
+                    <div class="thumbnail">
+                        <div class="caption">
+                            <a href="{% url 'extracao:detail' workspace.id %}"></a>
+		                        {% if workspace.extracao_twitter %}
+		                          <img src="{% static "extracao/images/twitter.jpg" %}" class="img-responsive">
+		                          <h4>{{ workspace.extracao_twitter }}</h4>
+                                  <h4>Workspace: {{ workspace.id }}</h4>
+		                        {% else %}
+		                          <img src="{% static "extracao/images/face.jpg" %}" class="img-responsive">
+                                  <h4>{{ workspace.extracao_facebook }}</h4>
+                                  <h4>Workspace: {{ workspace.id }}</h4>
+								{% endif %}
+                            
+                            <!-- View Details -->
+                            <a href="{% url 'extracao:detail' workspace.id %}" class="btn btn-primary btn-sm" role="button">Detalhes Extração</a>
+                            <a href="{% url 'extracao:detail_process' workspace.id %}" class="btn btn-primary btn-sm" role="button">Detalhes Processamento</a>
+                           	<!-- Update Workspace -->
+                           	{% if workspace.extracao_twitter %}
+                            <form action="{% url 'extracao:update_workspace_twitter' workspace.id %}" method="post" style="display: inline;">
+                                {% csrf_token %}
+                                <input type="hidden" name="workspace_id" value="{{ workspace.id }}" />
+                                <button type="submit" class="btn btn-default btn-sm">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </button>
+                            </form>
+                            <!-- Delete Workspace -->
+                            <form action="{% url 'extracao:delete_workspace' workspace.id %}" method="post" >
+                                {% csrf_token %}
+                                <input type="hidden" name="workspace_id" value="{{ workspace.id }}" />
+                                <button type="submit" class="btn btn-default btn-sm">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </button>
+                            </form>
+                            <!-- Baixar -->
+                   			<div class="dropup">
+							    <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown" >
+							    <span class="glyphicon glyphicon-download-alt "></span></button>
+							    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+							      <li role="presentation"><a href="{% url 'extracao:export_process_tweet' tipo='csv' %}" class="btn btn-default btn-sm">CSV</a></li>
+							      <li role="presentation"><a href="{% url 'extracao:export_process_tweet' tipo='json' %}" class="btn btn-default btn-sm">JSON</a></li>
+							      <li role="presentation"><a href="{% url 'extracao:export_process_tweet' tipo='xls' %}" class="btn btn-default btn-sm">XLS</a></li>
+							    </ul>
+							  </div>
+                            {% else %}
+							<form action="{% url 'extracao:update_workspace_facebook' workspace.id %}" method="post" style="display: inline;">
+                                {% csrf_token %}
+                                <input type="hidden" name="workspace_id" value="{{ workspace.id }}" />
+                                <button type="submit" class="btn btn-default btn-sm">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </button>
+                            </form>
+                            <!-- Delete Workspace -->
+                            <form action="{% url 'extracao:delete_workspace' workspace.id %}" method="post" >
+                                {% csrf_token %}
+                                <input type="hidden" name="workspace_id" value="{{ workspace.id }}" />
+                                <button type="submit" class="btn btn-default btn-sm">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </button>
+                            </form>
+                            <!-- Baixar -->
+                   			<div class="dropup">
+							    <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown" >
+							    <span class="glyphicon glyphicon-download-alt "></span></button>
+							    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+							      <li role="presentation"><a href="{% url 'extracao:export_process_post' tipo='csv' %}" class="btn btn-default btn-sm">CSV</a></li>
+							      <li role="presentation"><a href="{% url 'extracao:export_process_post' tipo='json' %}" class="btn btn-default btn-sm">JSON</a></li>
+							      <li role="presentation"><a href="{% url 'extracao:export_process_post' tipo='xls' %}" class="btn btn-default btn-sm">XLS</a></li>
+							    </ul>
+							  </div>
+							{% endif %}
+
+                           </div>
+                           <div>
+                        </div>
+                    </div>
+                </div>
+                {% cycle '' '' '' '' '' '<div class="clearfix visible-lg"></div>' %}
+            {% endfor %}
+        {% else %}
+            <div class="col-sm-12">
+                <br>
+                <a href="{% url 'extracao:select_social' %}">
+                    <button type="button" class="btn btn-success">
+                        <span class="glyphicon glyphicon-plus"></span>&nbsp; Add Workspace
+                    </button>
+                </a>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- If user searches and there are post -->
+    {% if posts %}
+        <div class="row">
+            <div class="col-sm-12">
+                <h3>Posts</h3>
+            </div>
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Post Title</th>
+                                    <th>Fanpage</th>
+                                    <th>Sql File</th>
+                                    <th>Workspace</th>
+                                    <th>Favorite</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for post in posts %}
+                                    <tr>
+                                        <td>{{ post.message }}</td>
+                                        <td>{{ post.workspace_id }}</td>
+                                        <td>
+                                            <a target="_blank" href="{{ post.sql_file.url }}">
+                                                <button type="button" class="btn btn-success btn-xs">
+                                                    <span class="glyphicon glyphicon-play"></span>&nbsp; Play
+                                                </button>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'extracao:detail' post.workspace.id %}">
+                                                <img src="{{ post.workspace.usuario_foto.url }}" class="img-responsive" style="width: 20px; float: left; margin-right: 10px;" />
+                                            </a>
+                                            <a href="{% url 'extracao:detail' post.workspace.id %}">{{ post.workspace.workspace_title }}</a>
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'extracao:favorite' post.id %}" class="btn-favorite"><span class="glyphicon glyphicon-star {% if post.is_favorite %}active{% endif %}"></span></a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+</div>
+{% endblock %}

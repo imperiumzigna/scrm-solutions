@@ -1,0 +1,111 @@
+{% extends 'extracao/base.html' %}
+{% block title %}Teste JS{% endblock %}
+{% block workspaces_active %}active{% endblock %}
+
+{% block body %}
+<meta charset="UTF-8">
+<div class="container-fluid songs-container">
+{% load static%}
+    <div class="row">
+
+        <!-- Left Workspace Info -->
+        <div class="col-sm-4 col-md-12">
+            <div class="panel panel-default">
+                <a href="{% url 'extracao:detail' workspace.id %}"></a>
+		             {% if workspace.extracao_twitter %}
+		             <img src="{% static "extracao/images/twitter.jpg" %}" class="img-responsive"> 
+		             <strong>{{ workspace.extracao_twitter }}</strong><br> 
+		             <strong>Consulta:</strong><small> {{ workspace.termo_consulta }}</small><br>
+                     <strong>ckey:</strong><small> {{ workspace.ckey }}</small><br>
+                     <strong>asecret:</strong><small> {{ workspace.asecret }}</small><br>
+                     <strong>csecret:</strong><small> {{ workspace.csecret }}</small><br>
+                     <strong>atoken:</strong><small> {{ workspace.atoken }}</small>
+                    {% else %}
+		                <div class="panel-body">
+		                <img src="{% static "extracao/images/face.jpg" %}" class="img-responsive">
+		                    <h4>{{ workspace.extracao_facebook }}<br> Consulta: {{ workspace.fanpage }} </h4>
+		                    <h4><small><strong>User Token:</strong> {{ workspace.user_token }}</small></h4>
+		                </div>
+                	{% endif %}
+            </div>
+        </div>
+        <div class="col-sm-4 col-md-4">
+	         <ul class="nav nav-pills" style="margin: 2px 2px;">
+	            <li role="presentation" class="active"><a href="{% url 'extracao:detail' workspace.id %}">teste</a></li>
+	            <li role="presentation"><a href="{% url 'extracao:create_post' workspace.id %}">teste</a></li>
+	         </ul>
+        </div>
+
+        <!-- Right post Info -->
+        <div class="col-sm-4 col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                
+                    {% if error_message %}
+                        <p><strong>{{ error_message }}</strong></p>
+                    {% endif %}
+
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Mensagem</th>
+                            <th>Ação</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for post in workspace.post_set.all %}
+                            <tr>   
+                                <td>
+                                    {{post.mensagem}}
+                                </td>
+
+                                <!-- nome coluna: Ação -->
+                                <td>
+                                    <form action="{% url 'extracao:delete_post' workspace.id post.id %}" method="post" style="display: inline;">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="post_id" value="{{ post.id }}" />
+                                        <button type="submit" class="btn btn-danger btn-xs">
+                                            <span class="glyphicon glyphicon-remove"></span>&nbsp; Delete
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+  
+    </div>
+
+				
+		<div id="myProgress">
+		  <div id="myBar">
+		    <div id="label">0%</div>
+		  </div>
+		</div>
+		
+		<br>
+		<button onclick="move()">Click Me</button> 
+		
+		<script>
+		function move() {
+		  var elem = document.getElementById("myBar");   
+		  var width = 20;
+		  var id = setInterval(frame, 20);
+		  function frame() {
+		    if (width >= 100) {
+		      clearInterval(id);
+		    } else {
+		      width++; 
+		      elem.style.width = width + '%'; 
+		      document.getElementById("label").innerHTML = width * 1  + '%';
+		    }
+		  }
+		}
+		</script>
+	
+</div>
+
+{% endblock %}

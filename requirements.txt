@@ -1,0 +1,14 @@
+dj-database-url
+Django
+facebook-sdk
+gunicorn
+mysql-connector
+oauthlib
+pymysql
+python-dateutil
+requests
+requests-oauthlib
+six
+tweepy
+emoji
+django-import-export

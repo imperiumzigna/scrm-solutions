@@ -1,0 +1,168 @@
+{% extends 'extracao/base.html' %}
+{% block title %}Detalhes Extração{% endblock %}
+{% block workspaces_active %}active{% endblock %}
+
+{% block body %}
+{% load static%}
+<meta charset="UTF-8">
+
+<div class="container-fluid">
+
+    <div class="row">
+
+        <!-- Left Workspace Info -->
+        <div class="col-sm-4 col-md-12">
+            <div class="panel panel-default">
+                <a href="{% url 'extracao:detail' workspace.id %}"></a>
+		             {% if workspace.extracao_twitter %}
+		             <img src="{% static "extracao/images/twitter.jpg" %}" class="img-responsive"> 
+		             <strong>{{ workspace.extracao_twitter }}</strong><br> 
+		             <strong>Consulta:</strong><small> {{ workspace.termo_consulta }}</small><br>
+                     
+                     <strong>ckey:</strong><small> {{ workspace.ckey }}</small><br>
+                     <strong>asecret:</strong><small> {{ workspace.asecret }}</small><br>
+                     <strong>csecret:</strong><small> {{ workspace.csecret }}</small><br>
+                     <strong>atoken:</strong><small> {{ workspace.atoken }}</small>
+                    {% else %}
+		                <div class="panel-body">
+		                <img src="{% static "extracao/images/face.jpg" %}" class="img-responsive">
+		                    <h4>{{ workspace.extracao_facebook }}</h4>
+		                    <h4><small><strong>User Token:</strong> {{ workspace.user_token }}</small></h4>
+		                </div>
+                	{% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        {% if workspace.extracao_twitter %}
+        
+        <div class="col-sm-4 col-md-4">
+	         <ul class="nav nav-pills" style="margin: 2px 2px;">
+	            <li role="presentation" class="active"><a href="{% url 'extracao:detail' workspace.id %}">Vizualizar</a></li>
+	            <li role="presentation"><a href="{% url 'extracao:create_twitter_post' workspace.id %}">Extrair</a></li>
+	            <li role="presentation"><a href="{% url 'extracao:processing_twitter_post' workspace.id %}">Pré-Processamento</a></li>
+	         </ul>
+        </div>
+        {% else %}
+        <div class="col-sm-4 col-md-4">
+	         <ul class="nav nav-pills" style="margin: 2px 2px;">
+	            <li role="presentation" class="active"><a href="{% url 'extracao:detail' workspace.id %}">Vizualizar</a></li>
+	            <li role="presentation"><a href="{% url 'extracao:create_facebook_post' workspace.id %}">Extrair</a></li>
+	            <li role="presentation"><a href="{% url 'extracao:processing_facebook_post' workspace.id %}">Pré-Processamento</a></li>
+	         </ul>
+        </div>
+		{% endif %}
+   </div>
+   <div class="row">	
+        <!-- Right post Info -->
+        <div class="col-sm-4 col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    {% if error_message %}
+                        <p><strong>{{ error_message }}</strong></p>
+                    {% endif %}
+                    
+                    {% if workspace.extracao_twitter %}
+                    	<table id="exemplo" class="table table-striped table-bordered" cellspacing="0" width="100%">
+				          	<thead>
+				          		<tr>
+				              		<th>Mensagem</th>
+				             		<th>Ação</th> 
+				          	    </tr>
+				            </thead>
+				            <tfoot>
+				            	<tr>
+				                	<th>Mensagem</th>
+ 				                	<th>Ação</th> 
+				           	   </tr>
+				            </tfoot>
+				            
+				            <tbody>
+				        	{% for tweet in workspace.tweet_set.all %}
+	                           <tr>                      
+	                              <!-- nome coluna: Mensagem -->
+	                              <td>
+	                                 {{tweet.tweet}}
+	                              </td>
+							      <!-- nome coluna: Ação -->
+	                              <td>
+	                                  <form action="{% url 'extracao:delete_post_tweet' workspace.id tweet.id %}" method="post" style="display: inline;">
+	                                       {% csrf_token %}
+	                                       <input type="hidden" name="tweet_id" value="{{ tweet.id }}" />
+	                                       		<button type="submit" class="btn btn-danger btn-xs">
+	                                            <span class="glyphicon glyphicon-remove"></span>&nbsp;
+	                                       </button>
+	                                  </form>
+	                              </td>
+	                            </tr>
+	                        {% endfor %}
+	                       </tbody>
+	                    </table>
+	                {% else %}
+                       	<table id="exemplo" class="table table-striped table-bordered" cellspacing="0" width="100%">  
+                       	    <thead>
+			            		<tr>
+			                		<th>Mensagem</th>
+				                		<th>Created_time</th> 
+ 				                	<th>Likes</th>
+					                	<th>Shares</th> 
+					                	<th>Reactions</th>
+					                	<th>Comments</th> 
+			            		    <th>Ação</th>
+			            		</tr>
+			        		</thead>
+			        		<tfoot>
+			            		<tr>
+			                		<th>Mensagem</th>
+				                		<th>Created_time</th> 
+ 				                	<th>Likes</th>
+					                	<th>Shares</th> 
+					                	<th>Reactions</th>
+					                	<th>Comments</th> 
+			            		    <th>Ação</th>
+			            		</tr>
+			        		</tfoot>
+			        		<tbody>
+			        		{% for post in workspace.post_set.all %}
+	                            <tr>
+	                                <!-- nome coluna: Mensagem -->
+	                                <td>
+	                                    {{post.message}}
+	                                </td>
+	                                <td>
+	                                    {{post.created_time}}
+	                                </td>
+									<td>
+	                                    {{post.likes}}
+	                                </td>
+	                                <td>
+	                                    {{post.shares}}
+	                                </td>
+	                                <td>
+	                                    {{post.reactions}}
+	                                </td>
+	                                <td>
+	                                    {{post.comment}}
+	                                </td>
+                                <!-- nome coluna: Ação -->
+	                                <td>
+	                                    <form action="{% url 'extracao:delete_post_fanpage' workspace.id post.id %}" method="post" style="display: inline;">
+	                                        {% csrf_token %}
+	                                        <input type="hidden" name="post_id" value="{{ post.id }}" />
+	                                        <button type="submit" class="btn btn-danger btn-xs">
+	                                            <span class="glyphicon glyphicon-remove"></span>&nbsp;
+	                                        </button>
+	                                    </form>
+	                                </td>
+                           		  {% endfor %}
+                           		 </tr>
+                            </tbody>
+                        </table>
+	                {% endif %}
+				</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}   

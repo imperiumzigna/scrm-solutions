@@ -1,0 +1,77 @@
+{% extends 'extracao/base.html' %}
+{% block title %}Processamento Twitter{% endblock %}
+{% block workspaces_active %}active{% endblock %}
+
+{% block body %}
+{% load static %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  
+  <script src="{% static 'extracao/js/erro.js' %}"></script>
+  
+<div class="container-fluid">
+    <div class="row">
+
+        <!-- Left Workspace Info -->
+        <div class="col-sm-4 col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                        <a href="{% url 'extracao:detail' workspace.id %}">
+                            {% if workspace.extracao_twitter %}
+                                <img src="{% static "extracao/images/twitter.jpg" %}" class="img-responsive">
+                                <h3><small>{{ workspace.extracao_twitter }}</small></h3>
+                            {% else %}
+                                <img src="{% static "extracao/images/face.jpg" %}" class="img-responsive">
+                                <h3><small>{{ workspace.extracao_facebook }}</small></h3>
+                            {% endif %}
+                        </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Post Info -->
+        <div class="col-sm-8 col-md-9">
+
+            <ul class="nav nav-pills" style="margin-bottom: 10px;">
+                <li role="presentation"><a href="{% url 'extracao:detail' workspace.id %}">Visualizar</a></li>
+                <li role="presentation" class="active"><a href="{% url 'extracao:processing_twitter_post' workspace.id %}">Processar</a></li>
+            </ul>
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h3>Processamento</h3>
+                    {% if error_message %}
+                    <div id="erro" title="Corrija o seguinte erro!">
+						<span class="fa-stack fa-lg">
+						  <i class="fa fa-ban fa-stack-2x text-danger"></i>
+						</span>
+                        <p><strong>{{ error_message }}</strong></p>
+                    </div>
+                    {% endif %}
+<!--                     <form class="form-horizontal" role="form" action="" method="post" onsubmit="move()" enctype="multipart/form-data"> -->
+                    <form class="form-horizontal" role="form" action="" method="post" onsubmit="move()" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="hidden" name="workspace" value="{{ workspace }}">
+                        {% include 'extracao/form_template.html' %}
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button id="extrair" type="submit" class="btn btn-success">Processar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+<!-- 			<div id="myProgress"> -->
+<!-- 			  <div id="myBar"> -->
+<!-- 			    <div id="label">0%</div> -->
+<!-- 			  </div> -->
+			</div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
