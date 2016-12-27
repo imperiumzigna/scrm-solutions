@@ -125,8 +125,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# PRODUCAO
-STATIC_ROOT = "/deploy/sites/scrm/static/"
 
 ARQUIVOS_ROOT = os.path.join(BASE_DIR, 'arquivos')
 ARQUIVOS_URL = '/arquivos/'
